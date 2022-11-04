@@ -15,6 +15,20 @@
     display: flex;
     text-align: center;
 }
+.date{
+    width: 15rem;
+    margin-right: 4rem;
+}
+.month{
+    width: 100%;
+    height: 12rem;
+    text-align: center;
+    text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+}
+.month i{
+    font-size: 2rem;
+    cursor: pointer;
+}
 .weekdays{
     width: 100%;
     height: 40px;
@@ -56,4 +70,15 @@
 .days div:hover{
     border: 0.2rem red solid;
     cursor: pointer;
+}
+.prev{
+    float: left;
+    margin: 2px 3px 3px 4px;
+    padding-left: 5rem;
+    padding-top: 1rem;
+}
+.next{
+    float: right;
+    padding-right: 4rem;
+    margin-top: -2.2rem;
 }
