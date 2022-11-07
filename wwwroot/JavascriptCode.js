@@ -4,7 +4,7 @@ function CreateCalendar(){
     date.setDate(1);
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
     const prevLastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
-    const firstDayIndex = date.getDay() - 1;
+    const firstDayIndex = date.getDay();
     const lastDayIndex = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDay();
     const nextDay = 7 - lastDayIndex;
     const months = [
@@ -21,20 +21,22 @@ function CreateCalendar(){
         "Ноябрь",
         "Декабрь",
     ];
-    
     document.querySelector(".date h1").innerHTML = months[date.getMonth()];
     document.querySelector(".date p").innerHTML = new Date().toDateString();
     let days = "";
     for(let x = firstDayIndex; x>0; x--){
-        days += `<div class = "prevDate">${prevLastDay - x + 1}</div>`;
+        days += `<input id = "prevDate${x}" type = "checkbox" name = "prevDate" />
+        <label for = "prevDate${x}" class = "prevDate">${prevLastDay - x + 1}</label>`;
     }
     
     for(let i = 1; i <= lastDay; i++){
-        days += `<div>${i}</div>`;
+        days += `<input id = "currentDate${i}" type = "checkbox" name = "currentDate" class = "currentDate">
+        <label for = "currentDate${i}">${i}</label>`;
     }
     
     for(let j = 1; j <= nextDay; j++){
-        days += `<div class = "nextDate">${j}</div>`;
+        days += `<input id = "nextDate${j}" type = "checkbox" name = "nextDate">
+        <label for = "nextDate${j}" class = "nextDate">${j}</label>`;
         monthDays.innerHTML = days;
     }
 }

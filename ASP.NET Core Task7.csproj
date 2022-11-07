@@ -16,7 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <None Include="wwwroot\index.html" />
+    <None Include="wwwroot\JavascriptCode.js" />
+    <None Include="wwwroot\styles.css" />
   </ItemGroup>
 
 </Project>

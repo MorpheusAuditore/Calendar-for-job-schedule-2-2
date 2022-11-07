@@ -54,22 +54,9 @@
     flex-wrap: wrap;
 }
 
-.days div{
-    margin: 0.7rem;
-    width: calc(10rem/7);
-    height: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.prevDate,
-.nextDate{
+.nextDate, 
+.prevDate{
     opacity: 0.5;
-}
-
-.days div:hover{
-    border: 0.2rem red solid;
-    cursor: pointer;
 }
 .prev{
     float: left;
@@ -81,4 +68,29 @@
     float: right;
     padding-right: 4rem;
     margin-top: -2.2rem;
+}
+
+label{
+    margin: 0.7rem;
+    width: calc(10rem/7);
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type = checkbox]{
+    display: none;
+}
+
+label:hover{
+    border: 0.2rem red solid;
+}
+
+input:checked + label{
+    border: 0.2rem red solid;
+}
+
+label:active, label:focus{
+    background-color: #888;
 }
