@@ -25,17 +25,17 @@ function CreateCalendar(){
     document.querySelector(".date p").innerHTML = new Date().toDateString();
     let days = "";
     for(let x = firstDayIndex; x>0; x--){
-        days += `<input id = "prevDate${x}" type = "checkbox" name = "prevDate" />
+        days += `<input id = "prevDate${x}" type = "checkbox" value = ${prevLastDay - x + 1} class = "monthDays" />
         <label for = "prevDate${x}" class = "prevDate">${prevLastDay - x + 1}</label>`;
     }
     
     for(let i = 1; i <= lastDay; i++){
-        days += `<input id = "currentDate${i}" type = "checkbox" name = "currentDate" class = "currentDate">
+        days += `<input id = "currentDate${i}" type = "checkbox" value = "${i}" class = "monthDays"/>
         <label for = "currentDate${i}">${i}</label>`;
     }
     
     for(let j = 1; j <= nextDay; j++){
-        days += `<input id = "nextDate${j}" type = "checkbox" name = "nextDate">
+        days += `<input id = "nextDate${j}" type = "checkbox" value = "${j}" class = "monthDays" />
         <label for = "nextDate${j}" class = "nextDate">${j}</label>`;
         monthDays.innerHTML = days;
     }
@@ -51,3 +51,13 @@ document.querySelector(".next").addEventListener("click", () => {
 });
 
 CreateCalendar();
+
+function GetCheckedDate(e){
+    if(e.target.checked){
+        alert("Вы выбрали " + e.target.value + " число.");
+    }
+}
+var checkedValue = document.getElementsByClassName("monthDays");
+for(let y = 0; y < checkedValue.length; y++){
+    checkedValue[y].addEventListener("click", GetCheckedDate);
+}
