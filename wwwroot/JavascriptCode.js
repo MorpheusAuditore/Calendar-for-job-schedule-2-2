@@ -1,4 +1,6 @@
 ﻿const date = new Date();
+var currentDays = "";
+var checkedValue = "";
 function CreateCalendar(){
     const monthDays = document.querySelector(".days");
     date.setDate(1);
@@ -39,6 +41,30 @@ function CreateCalendar(){
         <label for = "nextDate${j}" class = "nextDate">${j}</label>`;
         monthDays.innerHTML = days;
     }
+    currentDays = document.getElementsByClassName("monthDays");
+    function GetCheckedDate(e){
+        if(e.target.checked){
+            checkedValue += e.value;
+        }
+    }
+    for(let y = 0; y < currentDays.length; y++){
+        currentDays[y].addEventListener("click", GetCheckedDate);
+    }
+    document.getElementById("getSchedule").addEventListener("click", GetDateAndCheckedDate(currentDays, checkedValue));
+}
+
+async function GetDateAndCheckedDate(date, checkedDate){
+    const response = await fetch("/calendar", {
+        method: "GET",
+        headers: {"Accept": "application/json"},
+        body: JSON.stringify({
+            monthDate : date,
+            checkedDate : checkedDate
+        })
+    });
+    if(response.ok === true){
+        console.log("Запрос выполнен успешно");
+    }
 }
 
 document.querySelector(".prev").addEventListener("click", () => {
@@ -52,12 +78,3 @@ document.querySelector(".next").addEventListener("click", () => {
 
 CreateCalendar();
 
-function GetCheckedDate(e){
-    if(e.target.checked){
-        alert("Вы выбрали " + e.target.value + " число.");
-    }
-}
-var checkedValue = document.getElementsByClassName("monthDays");
-for(let y = 0; y < checkedValue.length; y++){
-    checkedValue[y].addEventListener("click", GetCheckedDate);
-}
