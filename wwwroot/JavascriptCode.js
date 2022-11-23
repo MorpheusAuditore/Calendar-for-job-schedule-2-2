@@ -3,6 +3,7 @@ var currentDays = "";
 var checkedValue = "";
 function CreateCalendar(){
     const monthDays = document.querySelector(".days");
+    var daysValue = "";
     date.setDate(1);
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
     const prevLastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
@@ -37,29 +38,31 @@ function CreateCalendar(){
     }
     
     for(let j = 1; j <= nextDay; j++){
-        days += `<input id = "nextDate${j}" type = "checkbox" value = "${j}" class = "monthDays" />
-        <label for = "nextDate${j}" class = "nextDate">${j}</label>`;
+        days += `<input id = 'nextDate${j}' type = 'checkbox' value = '${j}' class = 'monthDays' />
+        <label for = 'nextDate${j}' class = 'nextDate'>${j}</label>`;
         monthDays.innerHTML = days;
     }
     currentDays = document.getElementsByClassName("monthDays");
     function GetCheckedDate(e){
         if(e.target.checked){
-            checkedValue += e.value;
+            checkedValue += e.target.value + " ";
         }
     }
     for(let y = 0; y < currentDays.length; y++){
         currentDays[y].addEventListener("click", GetCheckedDate);
+        daysValue += currentDays[y].value + " ";
     }
-    document.getElementById("getSchedule").addEventListener("click", GetDateAndCheckedDate(currentDays, checkedValue));
+    document.getElementById("getSchedule").addEventListener("click", async () => await GetDateAndCheckedDate(daysValue, checkedValue));
 }
+
 
 async function GetDateAndCheckedDate(date, checkedDate){
     const response = await fetch("/calendar", {
-        method: "GET",
-        headers: {"Accept": "application/json"},
+        method: "POST",
+        headers: {"Accept": "application/json", "Content-Type": "application/json"},
         body: JSON.stringify({
-            monthDate : date,
-            checkedDate : checkedDate
+            MonthDate : date,
+            CheckedDate : checkedDate
         })
     });
     if(response.ok === true){
