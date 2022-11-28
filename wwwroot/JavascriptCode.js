@@ -1,9 +1,11 @@
 ﻿const date = new Date();
 var currentDays = "";
 var checkedValue = "";
+var daysId = "";
 function CreateCalendar(){
     const monthDays = document.querySelector(".days");
-    var daysValue = "";
+    daysId = "";
+    checkedValue = "";
     date.setDate(1);
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
     const prevLastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
@@ -28,8 +30,8 @@ function CreateCalendar(){
     document.querySelector(".date p").innerHTML = new Date().toDateString();
     let days = "";
     for(let x = firstDayIndex; x>0; x--){
-        days += `<input id = "prevDate${x}" type = "checkbox" value = ${prevLastDay - x + 1} class = "monthDays" />
-        <label for = "prevDate${x}" class = "prevDate">${prevLastDay - x + 1}</label>`;
+        days += `<input id = "prevDate${prevLastDay - x + 1}" type = "checkbox" value = ${prevLastDay - x + 1} class = "monthDays" />
+        <label for = "prevDate${prevLastDay - x + 1}" class = "prevDate">${prevLastDay - x + 1}</label>`;
     }
     
     for(let i = 1; i <= lastDay; i++){
@@ -45,17 +47,15 @@ function CreateCalendar(){
     currentDays = document.getElementsByClassName("monthDays");
     function GetCheckedDate(e){
         if(e.target.checked){
-            checkedValue += e.target.value + " ";
+            checkedValue += e.target.id + " ";
         }
     }
     for(let y = 0; y < currentDays.length; y++){
         currentDays[y].addEventListener("click", GetCheckedDate);
-        daysValue += currentDays[y].value + " ";
+        daysId += currentDays[y].id + " ";
     }
-    document.getElementById("getSchedule").addEventListener("click", async () => await GetDateAndCheckedDate(daysValue, checkedValue));
 }
-
-
+document.getElementById("getSchedule").addEventListener("click", async () => await GetDateAndCheckedDate(daysId, checkedValue));
 async function GetDateAndCheckedDate(date, checkedDate){
     const response = await fetch("/calendar", {
         method: "POST",
@@ -66,7 +66,10 @@ async function GetDateAndCheckedDate(date, checkedDate){
         })
     });
     if(response.ok === true){
-        console.log("Запрос выполнен успешно");
+        const workDate = await response.json();
+        for(let v = 0; v < workDate.length; v++){
+            document.getElementById(workDate[v]).checked = true;
+        }
     }
 }
 
