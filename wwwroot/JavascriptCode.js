@@ -67,7 +67,7 @@ async function GetDateAndCheckedDate(date, checkedDate){
         })
     });
     if(response.ok === true){
-        const workDate = await response.json();
+        var workDate = await response.json();
         for(let v = 0; v < workDate.length; v++){
             document.getElementById(workDate[v]).checked = true;
         }
@@ -78,6 +78,7 @@ function Reset(){
     for(let d = 0; d < currentDays.length; d++){
         document.getElementById(currentDays[d].id).checked = false;
     }
+    checkedValue = "";
 }
 
 document.querySelector(".prev").addEventListener("click", () => {
