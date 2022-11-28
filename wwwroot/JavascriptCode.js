@@ -56,6 +56,7 @@ function CreateCalendar(){
     }
 }
 document.getElementById("getSchedule").addEventListener("click", async () => await GetDateAndCheckedDate(daysId, checkedValue));
+document.getElementById("resetSchedule").addEventListener("click", () => Reset());
 async function GetDateAndCheckedDate(date, checkedDate){
     const response = await fetch("/calendar", {
         method: "POST",
@@ -70,6 +71,12 @@ async function GetDateAndCheckedDate(date, checkedDate){
         for(let v = 0; v < workDate.length; v++){
             document.getElementById(workDate[v]).checked = true;
         }
+    }
+}
+
+function Reset(){
+    for(let d = 0; d < currentDays.length; d++){
+        document.getElementById(currentDays[d].id).checked = false;
     }
 }
 
