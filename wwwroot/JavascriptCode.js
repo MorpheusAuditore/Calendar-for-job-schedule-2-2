@@ -1,11 +1,12 @@
 ﻿const date = new Date();
 var currentDays = "";
-var checkedValue = "";
-var daysId = "";
+var checkedValue = new Array();
+var daysId;
 function CreateCalendar(){
     const monthDays = document.querySelector(".days");
     daysId = "";
-    checkedValue = "";
+    checkedValue.length = 0;
+    const maxCheckedValues = 2;
     date.setDate(1);
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
     const prevLastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
@@ -46,8 +47,15 @@ function CreateCalendar(){
     }
     currentDays = document.getElementsByClassName("monthDays");
     function GetCheckedDate(e){
-        if(e.target.checked){
-            checkedValue += e.target.id + " ";
+        if(e.target.checked && checkedValue.length < maxCheckedValues){
+            checkedValue.push(e.target.id);
+        }
+        else{
+            e.target.checked = false;
+            const index = checkedValue.indexOf(e.target.id);
+            if(index > -1){
+                checkedValue.splice(index, 1);
+            }
         }
     }
     for(let y = 0; y < currentDays.length; y++){
@@ -55,9 +63,9 @@ function CreateCalendar(){
         daysId += currentDays[y].id + " ";
     }
 }
-document.getElementById("getSchedule").addEventListener("click", async () => await GetDateAndCheckedDate(daysId, checkedValue));
+document.getElementById("getSchedule").addEventListener("click", async () => await GetSchedule(daysId, checkedValue));
 document.getElementById("resetSchedule").addEventListener("click", () => Reset());
-async function GetDateAndCheckedDate(date, checkedDate){
+async function GetSchedule(date, checkedDate){
     const response = await fetch("/calendar", {
         method: "POST",
         headers: {"Accept": "application/json", "Content-Type": "application/json"},
@@ -78,7 +86,7 @@ function Reset(){
     for(let d = 0; d < currentDays.length; d++){
         document.getElementById(currentDays[d].id).checked = false;
     }
-    checkedValue = "";
+    checkedValue.length = 0;
 }
 
 document.querySelector(".prev").addEventListener("click", () => {

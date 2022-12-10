@@ -43,14 +43,14 @@ async Task GetDate(HttpRequest request, HttpResponse response)
     }
 }
 
-async Task GetSchedule(string date, string checkedDate, HttpResponse response)
+async Task GetSchedule(string date, string[] checkedDate, HttpResponse response)
 {
     string[] dateArray = date.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-    string[] checkedDateArray = checkedDate.Split(' ', StringSplitOptions.RemoveEmptyEntries);
     List<string> workDays = new List<string>();
     for (int i = 0; i < dateArray.Length - 1; i++)
     {
-        if (dateArray[i] == checkedDateArray[0] && dateArray[i + 1] == checkedDateArray[1])
+        if ((dateArray[i] == checkedDate[0] && dateArray[i + 1] == checkedDate[1]) || 
+            (dateArray[i] == checkedDate[1] && dateArray[i + 1] == checkedDate[0]))
         {
             for (int j = i; j < dateArray.Length - 1; j+=4)
             {
@@ -58,11 +58,11 @@ async Task GetSchedule(string date, string checkedDate, HttpResponse response)
             }
         }
     }
-    response.WriteAsJsonAsync(workDays);
+    await response.WriteAsJsonAsync(workDays);
 }
 
 public class Date
 {
     public string MonthDate { get; set; } = "";
-    public string CheckedDate { get; set; } = "";
+    public string[] CheckedDate { get; set; } = new string[2];
 }

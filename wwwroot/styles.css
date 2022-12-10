@@ -4,16 +4,30 @@
     box-sizing: border-box;
 }
 
+.head{
+    background-color: #12121f;
+    color: white;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 3rem;
+}
+
 .container{
     width: 100%;
-    height: 100vh;
+    height: 93vh;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #12121f;
 }
 .calendar{
     width: 20rem;
-    height: 45rem;
+    height: 29rem;
     display: flex;
     text-align: center;
+    background-color: #222227;
+    box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.5);
 }
 .date{
     width: 15rem;
@@ -21,9 +35,10 @@
 }
 .month{
     width: 100%;
-    height: 12rem;
+    height: 4rem;
     text-align: center;
     text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    background-color: #167e56;
 }
 .month i{
     font-size: 2rem;
@@ -33,10 +48,12 @@
     width: 100%;
     height: 40px;
     padding: 0 .4em;
+    color: white;
     display: flex;
     text-align: center;
     justify-content: center;
     align-items: center;
+    background-color: #222227;
 }
 .weekdays div{
     font-size: 1.5rem;
@@ -52,6 +69,8 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    color: white;
+    background-color: #222227;
 }
 
 .nextDate, 
@@ -84,7 +103,7 @@ input[type = checkbox]{
 }
 
 label:hover{
-    border: 0.2rem red solid;
+    border: 0.2rem blue solid;
 }
 
 input:checked + label{
