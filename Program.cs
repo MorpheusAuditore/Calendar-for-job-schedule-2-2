@@ -1,6 +1,3 @@
-using System.Globalization;
-
-
 var builder = WebApplication.CreateBuilder();
 var app = builder.Build();
 app.UseDefaultFiles();

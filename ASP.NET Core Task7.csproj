@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
@@ -19,6 +23,10 @@
     <None Include="wwwroot\index.html" />
     <None Include="wwwroot\JavascriptCode.js" />
     <None Include="wwwroot\styles.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="README.md" />
   </ItemGroup>
 
 </Project>
