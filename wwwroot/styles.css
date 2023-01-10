@@ -22,8 +22,8 @@
     background-color: #12121f;
 }
 .calendar{
-    width: 20rem;
-    height: 29rem;
+    width: 21rem;
+    height: 30rem;
     display: flex;
     text-align: center;
     background-color: #222227;
@@ -32,10 +32,11 @@
 .date{
     width: 15rem;
     margin-right: 4rem;
+    padding-left: 5rem;
 }
 .month{
     width: 100%;
-    height: 4rem;
+    height: 5rem;
     text-align: center;
     text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
     background-color: #167e56;
@@ -48,6 +49,7 @@
     width: 100%;
     height: 40px;
     padding: 0 .4em;
+    padding-right: 2px;
     color: white;
     display: flex;
     text-align: center;
@@ -67,6 +69,7 @@
 .days{
     width: 100%;
     display: flex;
+    padding-right: 3px;
     align-items: center;
     flex-wrap: wrap;
     color: white;
@@ -80,12 +83,12 @@
 .prev{
     float: left;
     margin: 2px 3px 3px 4px;
-    padding-left: 5rem;
+    padding-left: 1rem;
     padding-top: 1rem;
 }
 .next{
     float: right;
-    padding-right: 4rem;
+    padding-right: 1rem;
     margin-top: -2.2rem;
 }
 
@@ -112,4 +115,14 @@ input:checked + label{
 
 label:active, label:focus{
     background-color: #888;
+}
+#getSchedule, #resetSchedule{
+    background-color: #222227;
+    border-color: #222227;
+    color: white;
+    padding: 0.5rem;
+}
+.button{
+    background-color: #222227;
+    padding-bottom: 2rem;
 }
