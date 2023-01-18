@@ -106,7 +106,7 @@ input[type = checkbox]{
 }
 
 label:hover{
-    border: 0.2rem blue solid;
+    border: 0.2rem #888 solid;
 }
 
 input:checked + label{
@@ -121,6 +121,12 @@ label:active, label:focus{
     border-color: #222227;
     color: white;
     padding: 0.5rem;
+}
+#getSchedule:active, #resetSchedule:active{
+    background-color: #167e56;
+}
+#getSchedule:hover, #resetSchedule:hover{
+    border-color: #12121f;
 }
 .button{
     background-color: #222227;
