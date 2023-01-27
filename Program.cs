@@ -1,7 +1,11 @@
 var builder = WebApplication.CreateBuilder();
+builder.Services.AddControllers();
 var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=shedule}/{action=get}");
 app.Run(async context =>
 {
     var response = context.Response;
