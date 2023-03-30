@@ -1,44 +1,17 @@
-using System.Text.RegularExpressions;
-
-List<Person> users = new List<Person>()
-    {
-        new() {Id = Guid.NewGuid().ToString(), Name = "Tom", Age = 34},
-        new() {Id = Guid.NewGuid().ToString(), Name = "Bob", Age = 21},
-        new() {Id = Guid.NewGuid().ToString(), Name = "Baka", Age = 18}
-    };
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder();
 var app = builder.Build();
-
-app.Run(async (context) =>
+app.UseDefaultFiles();
+app.UseStaticFiles();
+app.Run(async context =>
 {
     var response = context.Response;
     var request = context.Request;
     var path = request.Path;
-
-    string expressionForGuid = @"^/api/users/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}$";
-
-    if (path == "/api/users" && request.Method == "GET")
+    if (path == "/calendar" && request.Method == "POST")
     {
-        await GetAllPeople(response);
-    }
-    else if (Regex.IsMatch(path, expressionForGuid) && request.Method == "GET")
-    {
-        string? id = path.Value?.Split('/')[3];
-        await GetPerson(id, response);
-    }
-    else if (path == "/api/users" && request.Method == "POST")
-    {
-        await CreatePerson(response, request);
-    }
-    else if (path == "/api/users" && request.Method == "PUT")
-    {
-        await UpdatePerson(response, request);
-    }
-    else if (Regex.IsMatch(path, expressionForGuid) && request.Method == "DELETE")
-    {
-        string? id = path.Value?.Split('/')[3];
-        await DeletePerson(id, response);
+        await GetDate(request, response);
     }
     else
     {
@@ -49,98 +22,46 @@ app.Run(async (context) =>
 
 app.Run();
 
-async Task GetAllPeople(HttpResponse response)
-{
-    await response.WriteAsJsonAsync(users);
-}
-
-async Task GetPerson(string? id, HttpResponse response)
-{
-    Person? user = users.FirstOrDefault(u => u.Id == id);
-    if (user != null)
-    {
-        await response.WriteAsJsonAsync(user);
-    }
-    else
-    {
-        response.StatusCode = 404;
-        await response.WriteAsJsonAsync(new { message = "Пользователь не найден" });
-    }
-}
-
-async Task DeletePerson(string? id, HttpResponse response)
-{
-    Person? user = users.FirstOrDefault(u => u.Id == id);
-    if (user != null)
-    {
-        users.Remove(user);
-        await response.WriteAsJsonAsync(user);
-    }
-    else
-    {
-        response.StatusCode = 404;
-        await response.WriteAsJsonAsync(new { message = "Пользователь не найден" });
-    }
-}
-
-async Task CreatePerson(HttpResponse response, HttpRequest request)
+async Task GetDate(HttpRequest request, HttpResponse response)
 {
     try
     {
-        var user = await request.ReadFromJsonAsync<Person>();
-        if (user != null)
+        var date = await request.ReadFromJsonAsync<Date>();
+        if (date != null)
         {
-            user.Id = Guid.NewGuid().ToString();
-            users.Add(user);
-            await response.WriteAsJsonAsync(user);
+            await GetSchedule(date.MonthDate, date.CheckedDate, response);
         }
         else
         {
-            throw new Exception("Некорректные данные");
+            throw new Exception("Incorrect data");
         }
     }
     catch (Exception)
     {
-        response.StatusCode = 404;
-        await response.WriteAsJsonAsync(new { message = "Некорректные данные" });
+        response.StatusCode = 400;
     }
 }
 
-async Task UpdatePerson(HttpResponse response, HttpRequest request)
+async Task GetSchedule(string date, string[] checkedDate, HttpResponse response)
 {
-    try
+    string[] dateArray = date.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+    List<string> workDays = new List<string>();
+    for (int i = 0; i < dateArray.Length - 1; i++)
     {
-        var userData = await request.ReadFromJsonAsync<Person>();
-        if (userData != null)
+        if ((dateArray[i] == checkedDate[0] && dateArray[i + 1] == checkedDate[1]) ||
+            (dateArray[i] == checkedDate[1] && dateArray[i + 1] == checkedDate[0]))
         {
-            var user = users.FirstOrDefault(u => u.Id == userData.Id);
-            if (user != null)
+            for (int j = i; j < dateArray.Length - 1; j += 4)
             {
-                user.Age = userData.Age;
-                user.Name = userData.Name;
-                await response.WriteAsJsonAsync(user);
-            }
-            else
-            {
-                response.StatusCode = 404;
-                await response.WriteAsJsonAsync(new { message = "Пользователь не найден" });
+                workDays.AddRange(new List<string> { dateArray[j], dateArray[j + 1] });
             }
         }
-        else
-        {
-            throw new Exception("Некорректные данные");
-        }
     }
-    catch (Exception)
-    {
-        response.StatusCode = 404;
-        await response.WriteAsJsonAsync("Некорректные данные");
-    }
+    await response.WriteAsJsonAsync(workDays);
 }
 
-public class Person
+public class Date
 {
-    public string Id { get; set; } = "";
-    public string Name { get; set; } = "";
-    public int Age { get; set; }
+    public string MonthDate { get; set; } = "";
+    public string[] CheckedDate { get; set; } = new string[2];
 }

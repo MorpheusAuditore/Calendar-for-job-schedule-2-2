@@ -1,0 +1,134 @@
+﻿*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.head{
+    background-color: #12121f;
+    color: white;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 3rem;
+}
+
+.container{
+    width: 100%;
+    height: 93vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #12121f;
+}
+.calendar{
+    width: 21rem;
+    height: 30rem;
+    display: flex;
+    text-align: center;
+    background-color: #222227;
+    box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.5);
+}
+.date{
+    width: 15rem;
+    margin-right: 4rem;
+    padding-left: 5rem;
+}
+.month{
+    width: 100%;
+    height: 5rem;
+    text-align: center;
+    text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    background-color: #167e56;
+}
+.month i{
+    font-size: 2rem;
+    cursor: pointer;
+}
+.weekdays{
+    width: 100%;
+    height: 40px;
+    padding: 0 .4em;
+    padding-right: 2px;
+    color: white;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background-color: #222227;
+}
+.weekdays div{
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.days{
+    width: 100%;
+    display: flex;
+    padding-right: 3px;
+    align-items: center;
+    flex-wrap: wrap;
+    color: white;
+    background-color: #222227;
+}
+
+.nextDate, 
+.prevDate{
+    opacity: 0.5;
+}
+.prev{
+    float: left;
+    margin: 2px 3px 3px 4px;
+    padding-left: 1rem;
+    padding-top: 1rem;
+}
+.next{
+    float: right;
+    padding-right: 1rem;
+    margin-top: -2.2rem;
+}
+
+label{
+    margin: 0.7rem;
+    width: calc(10rem/7);
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type = checkbox]{
+    display: none;
+}
+
+label:hover{
+    border: 0.2rem #888 solid;
+}
+
+input:checked + label{
+    border: 0.2rem red solid;
+}
+
+label:active, label:focus{
+    background-color: #888;
+}
+#getSchedule, #resetSchedule{
+    background-color: #222227;
+    border-color: #222227;
+    color: white;
+    padding: 0.5rem;
+}
+#getSchedule:active, #resetSchedule:active{
+    background-color: #167e56;
+}
+#getSchedule:hover, #resetSchedule:hover{
+    border-color: #12121f;
+}
+.button{
+    background-color: #222227;
+    padding-bottom: 2rem;
+}
