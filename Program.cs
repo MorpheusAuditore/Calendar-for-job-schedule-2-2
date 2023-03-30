@@ -1,11 +1,9 @@
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder();
-builder.Services.AddControllers();
 var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=shedule}/{action=get}");
 app.Run(async context =>
 {
     var response = context.Response;
@@ -21,7 +19,7 @@ app.Run(async context =>
         await response.SendFileAsync("html/index.html");
     }
 });
-    
+
 app.Run();
 
 async Task GetDate(HttpRequest request, HttpResponse response)
@@ -50,10 +48,10 @@ async Task GetSchedule(string date, string[] checkedDate, HttpResponse response)
     List<string> workDays = new List<string>();
     for (int i = 0; i < dateArray.Length - 1; i++)
     {
-        if ((dateArray[i] == checkedDate[0] && dateArray[i + 1] == checkedDate[1]) || 
+        if ((dateArray[i] == checkedDate[0] && dateArray[i + 1] == checkedDate[1]) ||
             (dateArray[i] == checkedDate[1] && dateArray[i + 1] == checkedDate[0]))
         {
-            for (int j = i; j < dateArray.Length - 1; j+=4)
+            for (int j = i; j < dateArray.Length - 1; j += 4)
             {
                 workDays.AddRange(new List<string> { dateArray[j], dateArray[j + 1] });
             }
